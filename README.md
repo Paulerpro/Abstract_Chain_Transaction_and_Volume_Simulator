@@ -94,5 +94,3 @@ This tool is for educational and testing purposes only. Use responsibly and alwa
 ```
 
 ---
-
-Would you like me to generate a `requirements.txt` for the project too?
