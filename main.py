@@ -19,3 +19,5 @@ if web3.is_connected():
 else:
     logging.error("Connection failed.")
 
+fund_wallet.fund_wallet()
+
