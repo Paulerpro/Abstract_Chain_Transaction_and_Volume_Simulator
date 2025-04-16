@@ -21,3 +21,7 @@ else:
 
 data = fund_wallet.fund_wallet()
 
+while True:
+    send_transaction.send_transaction()
+    time.sleep(random.randint(10, 60)) 
+

@@ -55,8 +55,32 @@ def fund_wallet():
         }
 
     if low_balance(balance):
-        # go ahead with refill
-        pass
+        # proceed with refill
+        nonce = web3.eth.get_transaction_count(funder_account.address)
+
+        tx = {
+            'to': tx_sender,
+            'value': TOP_UP_AMOUNT,
+            'gas': GAS_LIMIT,
+            'gasPrice': GAS_PRICE,
+            'nonce': nonce,
+            'chainId': web3.eth.chain_id
+        }
+
+        signed_tx = web3.eth.account.sign_transaction(tx, funder_key)
+        try:
+            logging.info(f"Balance low! Refilling {tx_sender} from {funder_account.address}......")
+            tx_hash = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
+            logging.info(
+                f"Sent {web3.from_wei(TOP_UP_AMOUNT, 'ether')} ETH to {tx_sender} | Tx: {web3.to_hex(tx_hash)}"
+                )
+        except Exception as e:
+            logging.error(e)
+
     else:
         # proceed to send transaction
-        pass
+        logging.info(
+            f"{tx_sender} has enough balance: {web3.from_wei(balance, 'ether')} ETH /n Proceeding to next step...."
+            )
+    
+    return data
